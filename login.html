@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+    <link rel="shortcut icon" href="#"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <script src="https://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="container-fluid col-lg-12 navbar-inverse">
+    <nav class="nav-pills navbar-header" role="navigation">
+        <ul class="nav navbar-nav">
+            <li style="font-size: large"><a id="login" style="text-decoration-color: aliceblue" href="register.html">Register</a></li>
+            <li style="font-size: large"><a id="grounding" style="text-decoration-color: aliceblue" href="reset_password.html">Reset password</a></li>
+        </ul>
+    </nav>
+</div>
+<div class="container">
+<form class="form-horizontal">
+<div class="form-group">
+<label class="col-sm-4 control-label">Username</label>
+<div class="col-sm-4">
+<input type="text" id="username" class="form-control" placeholder="Please input your username:"><br>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-4 control-label">Password</label>
+<div class="col-sm-4">
+<input type="password" id="password" class="form-control" placeholder="Please input your password:"><br>
+</div>
+</div>
+<div class="form-group">
+    <div class="col-sm-offset-4 col-sm-1">
+<input class="btn btn-primary form-control" value="submit" onclick="Submit()">
+</div>
+</div>
+</form>
+</div>
+</body>
+<script>
+    function Submit() {
+        var username = document.getElementById("username").value
+        var password = document.getElementById("password").value
+        $.post(
+            "http://127.0.0.1:5000/login",
+            {
+                "username": username,
+                "password": password
+            },
+            function (data) {
+                if(data===true) {
+                    alert('login succeed!')
+                    $(location).attr("href", "home.html")
+                }
+                else {
+                    alert('Please input the correct username and password.')
+                    $(location).attr("href", "login.html")
+                }
+            }
+        )
+    }
+</script>
+</html>

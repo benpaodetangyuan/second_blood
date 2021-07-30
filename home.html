@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <script src="https://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container-fluid col-lg-12 navbar-inverse">
+    <nav class="nav-pills navbar-header" role="navigation">
+        <ul class="nav navbar-nav">
+            <li style="font-size: large"><a id="login" style="text-decoration-color: aliceblue">Sign in</a></li>
+            <li style="font-size: large"><a id="grounding" style="text-decoration-color: aliceblue">Grounding good</a></li>
+            <script src="https://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+        </ul>
+    </nav>
+</div>
+<div class="container-fluid" id="tmp"></div>
+</body>
+<div class="container" style="padding-bottom: 100px">
+    <script>
+        var i = 0
+        $.getJSON("http://127.0.0.1:5000/", function (data) {
+            console.log(data)
+            for (i = 0; i < data.length; i++) {
+                console.log(data[i]['goods']["address"])
+                var div = document.createElement('div')
+                var img = document.createElement('img')
+                var btn = document.createElement('input')
+                var name = data[i]['goods']["name"]
+                var br = document.createElement('br')
+                var ul = document.createElement('li')
+                ul.append('¥' + data[i]['goods']["price"])
+                div.className = "container-fluid col-sm-4 "
+                btn.className = "btn btn-danger"
+                btn.value = "undercarriage"
+                btn.id = "btn"
+                console.log(name)
+                btn.onclick = createClickfunc(name)
+                img.src = data[i]['goods']["address"]
+                img.width = 300
+                img.height = 300
+                div.append(img, br, data[i]['goods']["name"]+' \n', data[i]['goods']["description"]+' \n', ul)
+                div.append(btn)
+                var DIV = document.getElementById("tmp")
+                DIV.appendChild(div)
+            }
+        })
+        var login_btn = document.getElementById("login")
+        login_btn.onclick = function () {
+            $(location).attr("href","login.html")
+        }
+        var grounding_btn = document.getElementById("grounding")
+        grounding_btn.onclick = function (){
+            $(location).attr("href","grounding.html")
+        }
+    </script>
+    <div class="panel-footer" style="position: fixed; bottom: 0; display: block; width: 100%; left: 0;background: black">
+        <p style="color: gainsboro">Create by: XCX</p>
+        <p style="color: gainsboro"><time id="time"></time></p>
+    </div>
+    <script>
+        function createClickfunc(name) {
+            return function (){
+                $.post(
+                    "http://127.0.0.1:5000/undercarriage",
+                    {
+                        "name": name
+                    },
+                    function () {
+                        alert('The good has been undercarriage')
+                        $(location).attr("href", "home.html")
+                    }
+                )
+            }
+        }
+        var date = new Date()
+        var y = date.getFullYear();
+        var m = date.getMonth()+1;
+        var d = date.getDate();
+        var h = date.getHours();
+        var min = date.getMinutes()
+        if(min<10)
+            min = '0'+min.toString()
+        document.getElementById("time").innerHTML = "The time you get in："+y+"-"+m+"-"+d+" "+h+":"+min;
+    </script>
+</div>
+</html>

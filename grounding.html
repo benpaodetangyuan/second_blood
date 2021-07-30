@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Grounding</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <script src="https://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+</head>
+<body>
+<form id="form" name="form" class="form-horizontal" role="form">
+    <div class="form-group">
+        <label class="col-sm-4 control-label">Name:</label>
+        <div class="col-sm-4">
+            <input type="text" id="name" class="form-control" placeholder="Please input the name of good:"><br>
+        </div>
+    </div>
+    <div class="form-group">
+    <label class="col-sm-4 control-label">Description:</label>
+    <div class="col-sm-4">
+        <input type="text" id="description" class="form-control" placeholder="Please input the description of good:"><br>
+    </div>
+    </div>
+        <div class="form-group">
+    <label class="col-sm-4 control-label">Address:</label>
+    <div class="col-sm-4">
+        <input type="text" id="address" class="form-control" placeholder="Please input the address of good:"><br>
+    </div>
+        </div>
+            <div class="form-group">
+    <label class="col-sm-4 control-label">Price:</label>
+    <div class="col-sm-4">
+        <input type="number" step="0.1" id="price" class="form-control" placeholder="Please input the price of good:"><br>
+    </div>
+            </div>
+    <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-1">
+        <input class="btn btn-primary form-control" value="submit" onclick="clicked()">
+     </div>
+    </div>
+</form>
+</body>
+<script>
+    function clicked() {
+        var name = document.getElementById("name").value
+        var description = document.getElementById("description").value
+        var address = document.getElementById("address").value
+        var price = document.getElementById("price").value
+        $.post(
+            "http://127.0.0.1:5000/grounding",
+            {
+                "name": name,
+                "description": description,
+                "address": address,
+                "price": price
+            },
+            setTimeout(function () {
+                alert('The good has been grounded')
+                $(location).attr("href", "home.html")
+                },1000
+            )
+        )
+    }
+</script>
+</html>
